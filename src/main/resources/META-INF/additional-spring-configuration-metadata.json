@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "datasource.type",
+  "type": "java.lang.String",
+  "description": "'datasource.type indicate datasource's type, json, csv or databes'"
+}]}
