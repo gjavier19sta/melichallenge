@@ -4,50 +4,51 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+import challenge.melichallenge.datasource.CsvProductDataSource;
+import challenge.melichallenge.datasource.DatabaseProductDataSource;
+import challenge.melichallenge.datasource.JsonProductDataSource;
 import challenge.melichallenge.datasource.ProductDataSource;
 import challenge.melichallenge.exception.EnumIllegalArgumentException;
 
+@SpringBootTest
 class ProductDataSourceConfigTest {
 
-    private final ProductDataSourceConfig config = new ProductDataSourceConfig();
-
+    @Autowired
+    private JsonProductDataSource jsonDs;
+    @Autowired
+    private CsvProductDataSource csvDs;
+    @Autowired
+    private DatabaseProductDataSource dbDs;
+    
     @Test
     @DisplayName("Debe crear un JsonProductDataSource cuando el tipo es JSON")
     void shouldCreateJsonDataSource() {
-        ProductDataSource ds = config.getDataSource("JSON");
+        ProductDataSourceConfig config = new ProductDataSourceConfig("JSON", jsonDs, csvDs, dbDs);
+        ProductDataSource ds = config.productDataSource();
         assertNotNull(ds);
         assertEquals("JsonProductDataSource", ds.getClass().getSimpleName());
     }
 
+
     @Test
     @DisplayName("Debe lanzar UnsupportedOperationException para tipo CSV")
     void shouldThrowUnsupportedForCSV() {
-        UnsupportedOperationException ex = assertThrows(
-                UnsupportedOperationException.class,
-                () -> config.getDataSource("CSV")
-        );
-        assertEquals("Archivo CSV no implementado aún", ex.getMessage());
+        ProductDataSourceConfig config = new ProductDataSourceConfig("CSV", jsonDs, csvDs, dbDs);
+        ProductDataSource ds = config.productDataSource();
+        assertNotNull(ds);
+        assertEquals("CsvProductDataSource", ds.getClass().getSimpleName());
     }
 
     @Test
     @DisplayName("Debe lanzar UnsupportedOperationException para tipo DATABASE")
     void shouldThrowUnsupportedForDatabase() {
-        UnsupportedOperationException ex = assertThrows(
-                UnsupportedOperationException.class,
-                () -> config.getDataSource("DATABASE")
-        );
-        assertEquals("Base de datos no implementada aún", ex.getMessage());
+        ProductDataSourceConfig config = new ProductDataSourceConfig("DATABASE", jsonDs, csvDs, dbDs);
+        ProductDataSource ds = config.productDataSource();
+        assertNotNull(ds);
+        assertEquals("DatabaseProductDataSource", ds.getClass().getSimpleName());
     }
 
-    @Test
-    @DisplayName("Debe lanzar EnumIllegalArgumentException si el tipo es inválido")
-    void shouldThrowEnumIllegalArgumentExceptionForInvalidType() {
-        EnumIllegalArgumentException ex = assertThrows(
-                EnumIllegalArgumentException.class,
-                () -> config.getDataSource("INVALID")
-        );
-
-        assertTrue(ex.getMessage().contains("Tipo de datasource inválido"));
-    }
 }

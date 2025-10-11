@@ -9,12 +9,13 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.json.JsonParseException;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import challenge.melichallenge.model.Product;
-
+@Component
 public class JsonProductDataSource implements ProductDataSource {
 
     private static final Logger logger = LoggerFactory.getLogger(JsonProductDataSource.class);
@@ -38,6 +39,7 @@ public class JsonProductDataSource implements ProductDataSource {
 
             logger.debug("[DEBUG] Archivo JSON encontrado, creando ObjectMapper...");
             ObjectMapper mapper = new ObjectMapper();
+            logger.debug("[DEBUG] Crando la Lista de productos...");
             List<Product> listaDeProductsFromJson = mapper.readValue(inputStream, new TypeReference<List<Product>>() {});
             
             logger.debug("[DEBUG] Productos cargados desde JSON:");

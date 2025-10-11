@@ -1,6 +1,7 @@
 package challenge.melichallenge.model;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -26,9 +27,11 @@ public class Product {
     private double price;
     private String currency;
     private String condition;
+    @Column(name="available_quantity")
     private int availableQuantity;
     private String seller;
     private String warranty;
+    @Column(name="image_url")
     private String imageUrl;
 
 }
