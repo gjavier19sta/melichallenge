@@ -50,5 +50,16 @@ class ProductDataSourceConfigTest {
         assertNotNull(ds);
         assertEquals("DatabaseProductDataSource", ds.getClass().getSimpleName());
     }
+    
+    @Test
+    @DisplayName("Debe lanzar EnumIllegalArgumentException si el tipo es inválido")
+    void shouldThrowEnumIllegalArgumentExceptionForInvalidType() {
+        ProductDataSourceConfig config = new ProductDataSourceConfig("INVALID", jsonDs, csvDs, dbDs);
+        EnumIllegalArgumentException ex = assertThrows(
+                EnumIllegalArgumentException.class,
+                () -> config.productDataSource()
+        );
 
+        assertTrue(ex.getMessage().contains("Tipo de datasource inválido"));
+    }
 }
