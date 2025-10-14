@@ -2,7 +2,6 @@ package challenge.melichallenge.datasource;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import challenge.melichallenge.model.Product;
@@ -12,7 +11,6 @@ import challenge.melichallenge.repository.ProductRepository;
 public class DatabaseProductDataSource implements ProductDataSource {
     private final ProductRepository repository;
 
-    @Autowired
     public DatabaseProductDataSource(ProductRepository repository) {
         this.repository = repository;
     }
