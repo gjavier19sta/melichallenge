@@ -25,13 +25,13 @@ public class CsvProductDataSource implements ProductDataSource{
     }
 
     private List<Product> loadProductsFromCsv(){
-        logger.info("[INFO] Iniciaando servicio por csv");
+        logger.debug("[INFO] Iniciaando servicio por csv");
         List<Product> productsList = new ArrayList<Product>();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(CSV_PATH)))) {
-            logger.info("[INFO] Iniciando carga de lista csv");
+            logger.debug("[INFO] Iniciando carga de lista csv");
             // Saltar encabezado si existe
             reader.readLine();
-            logger.info("[INFO] Linea {}");
+            logger.debug("[INFO] Linea {}");
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(";", -1);

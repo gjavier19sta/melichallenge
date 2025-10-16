@@ -11,9 +11,6 @@ import challenge.melichallenge.datasource.CsvProductDataSource;
 import challenge.melichallenge.datasource.DatabaseProductDataSource;
 import challenge.melichallenge.datasource.JsonProductDataSource;
 import challenge.melichallenge.datasource.ProductDataSource;
-import challenge.melichallenge.exception.EnumIllegalArgumentException;
-//import challenge.melichallenge.factory.DataSourceFactory;
-
 
 @Configuration
 public class ProductDataSourceConfig {
@@ -47,17 +44,21 @@ public class ProductDataSourceConfig {
                             yield csvDataSource;
                         }
             case "DATABASE" -> {
-                            logger.info("[INFO] Datasource tipo CSV creada" );
+                            logger.info("[INFO] Datasource tipo DATABASE creada" );
                             yield databaseDataSource;
                         }
             case "JSON" -> {
-                            logger.info("[INFO] Datasource tipo CSV creada" );
+                            logger.info("[INFO] Datasource tipo JSON creada" );
                             yield jsonDataSource;
                             }
-            default -> throw new EnumIllegalArgumentException(
-                "Tipo de datasource inválido: '" + datasourceType + "'. " +
-                "Valores válidos: [JSON, CSV, DATABASE]"
-            );
+            default ->  jsonDataSource;
+  /*           { 
+                logger.error("[ERROR] opcion no valida" );
+                throw new EnumIllegalArgumentException(
+                "Tipo de datasource invalido: '" + datasourceType + "'. " +
+                "Valores válidos: [JSON, CSV, DATABASE]");    
+            }*/
+            
         };
     }
 }
